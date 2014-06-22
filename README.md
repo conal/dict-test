@@ -1,7 +1,20 @@
 Test HERMIT dictionary construction.
-Currently appears to be broken.
+The module `DictTest` (in src/) defines a transformation `succ`, which applies the successor function if an `Enum` dictionary can be build, using `buildDictionaryT` from `HERMIT.Dictionary.GHC`.
+See HERMIT issue [Find/construct dictionary from class and type](https://github.com/ku-fpg/hermit/issues/88).
 
-To build, install and run as follows:
+My expected result:
+
+```haskell
+test1 :: Bool
+test1 = False  -- succ failure
+test2 :: Int
+test2 = succ Int (let $dGHC.Enum.EnumGHC.Types.Int = ... in $dGHC.Enum.EnumGHC.Types.Int) (I# 3)
+```
+
+Instead, both `succ` applications succeed, and neither generates bindings.
+Core-lint rightly objects to both out-of-scope references.
+
+Install and run as follows:
 
 ```
 bash-3.2$ cabal install
@@ -41,8 +54,4 @@ Test.test2 =
     @ GHC.Types.Int $dGHC.Enum.EnumGHC.Types.Int_s18m (GHC.Types.I# 3)
 
 *** End of Offense ***
-
-
-<no location info>: 
-Compilation had errors
 ```
