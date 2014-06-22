@@ -1,0 +1,29 @@
+Name:               dict-test
+Version:            0.0
+Cabal-Version:      >= 1.8
+Synopsis:           Test HERMIT-based dictionary construction
+Category:           categories
+Description:        Test HERMIT-based dictionary construction
+Author:             Conal Elliott
+Maintainer:         conal@conal.net
+Homepage:           http://github.com/conal/dict-test
+License:            BSD3
+Stability:          experimental
+build-type:         Simple
+
+Extra-Source-Files:
+                    test/Test.hs
+
+source-repository head
+  type:             git
+  location:         git://github.com/conal/dict-test
+
+Library
+  hs-Source-Dirs:   src
+  Build-Depends:    base < 5
+                  , ghc >= 7.6
+                  , kure >= 2.16.0
+                  , hermit >= 0.5.0.0
+
+  Exposed-Modules:  DictTest
+
