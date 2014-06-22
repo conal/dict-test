@@ -2,7 +2,7 @@ Name:               dict-test
 Version:            0.0
 Cabal-Version:      >= 1.8
 Synopsis:           Test HERMIT-based dictionary construction
-Category:           categories
+Category:           
 Description:        Test HERMIT-based dictionary construction
 Author:             Conal Elliott
 Maintainer:         conal@conal.net
