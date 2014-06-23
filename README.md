@@ -1,3 +1,5 @@
+*Note:* The problem of accidental success (as in `test3` below) is fixed in [Improve error reporting from TcM and DsM capabilities (dictionaries)](https://github.com/ku-fpg/hermit/commit/18694aef8b214994fe33b27da7710647caec0203).
+
 Test HERMIT dictionary construction.
 The module `DictTest` (in src/) defines a transformation `succ`, which applies the successor function if an `Enum` dictionary can be build, using `buildDictionaryT` from `HERMIT.Dictionary.GHC`.
 See HERMIT issue [Find/construct dictionary from class and type](https://github.com/ku-fpg/hermit/issues/88).
