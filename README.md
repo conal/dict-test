@@ -3,16 +3,32 @@ The module `DictTest` (in src/) defines a transformation `succ`, which applies t
 See HERMIT issue [Find/construct dictionary from class and type](https://github.com/ku-fpg/hermit/issues/88).
 
 My expected result:
-
 ```haskell
-test1 :: Bool
-test1 = False  -- succ failure
+test3 :: [Char]
+test3 = (unpackCString# "oops!"#)        -- failure
 test2 :: Int
-test2 = succ Int (let $dGHC.Enum.EnumGHC.Types.Int = ... in $dGHC.Enum.EnumGHC.Types.Int) (I# 3)
+test2 = succ Int $fEnumInt (I# 3)
+test1 :: Bool
+test1 = succ Bool $fEnumBool False
+foo :: ()
+foo = succ () $fEnum() ()
 ```
 
-Instead, both `succ` applications succeed, and neither generates bindings.
-Core-lint rightly objects to both out-of-scope references.
+Instead, all three `succ` applications succeed, and but `test3` refers to a bogus dictionary variable:
+```
+test3 :: [Char]
+test3 =
+  succ [Char] $dGHC.Enum.Enum[GHC.Types.Char]
+    (unpackCString# "oops!"#)
+```
+
+Moreover, *all three* definitions succeed with this bogus form when the name `succ` does not appear in the pre-transformed module.
+I've worked around by adding
+```haskell
+foo :: ()
+foo = succ ()
+```
+Thanks to Andrew Farmer for this clue.
 
 Install and run as follows:
 
