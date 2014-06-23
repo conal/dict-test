@@ -18,11 +18,11 @@ test3 :: [Char]
 test3 = succ [Char] $dGHC.Enum.Enum[GHC.Types.Char] (unpackCString# "oops!"#)
 ```
 
-Moreover, *all three* definitions succeed with this bogus form when the name `succ` does not appear in the pre-transformed module.
-I've worked around by adding
+Moreover, *all three* definitions succeed with this bogus form when `Enum` does not appear in the pre-transformed module.
+I've worked around by adding the following:
 ```haskell
 foo :: ()
-foo = succ ()
+foo = pred ()
 ```
 Thanks to Andrew Farmer for this clue.
 
