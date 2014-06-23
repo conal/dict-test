@@ -10,7 +10,7 @@
 -- Test HERMIT-based dictionary construction
 ----------------------------------------------------------------------
 
-#define MyBuildDict
+-- #define MyBuildDict
 
 module DictTest where
 
