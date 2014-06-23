@@ -4,14 +4,12 @@ See HERMIT issue [Find/construct dictionary from class and type](https://github.
 
 My expected result:
 ```haskell
-test3 :: [Char]
-test3 = (unpackCString# "oops!"#)        -- failure
-test2 :: Int
-test2 = succ Int $fEnumInt (I# 3)
 test1 :: Bool
 test1 = succ Bool $fEnumBool False
-foo :: ()
-foo = succ () $fEnum() ()
+test2 :: Int
+test2 = succ Int $fEnumInt (I# 3)
+test3 :: [Char]
+test3 = (unpackCString# "oops!"#)        -- failure
 ```
 
 Instead, all three `succ` applications succeed, and but `test3` refers to a bogus dictionary variable:
@@ -37,14 +35,14 @@ bash-3.2$ cabal install
 ...
 Installed dict-test-0.0
 bash-3.2$ cd test
-test1 :: Bool
-test1 = succ Bool $fEnumBool False
-test2 :: Int
-test2 = succ Int $fEnumInt (I# 3)
 test3 :: [Char]
 test3 =
   succ [Char] $dGHC.Enum.Enum[GHC.Types.Char]
     (unpackCString# "oops!"#)
+test2 :: Int
+test2 = succ Int $fEnumInt (I# 3)
+test1 :: Bool
+test1 = succ Bool $fEnumBool False
 hermit<10> resume
 *** Core Lint errors : in result of Core plugin:  HERMIT0 ***
 <no location info>: Warning:
