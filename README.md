@@ -87,7 +87,7 @@ buildDictionaryT = contextfreeT $ \ ty -> do
     binder <- newIdH ("$d" ++ filter (not . isSpace) (showPpr dflags ty)) ty
     guts <- getModGuts
     (i,bnds) <- liftCoreM $ buildDictionary guts binder
-    if (null bnds)
+    if null bnds
       fail "couldn't build dictionary"
      else return $ case bnds of
                      [NonRec v e] | i == v -> e -- the common case that we would have gotten a single non-recursive let

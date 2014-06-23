@@ -54,7 +54,7 @@ buildDictionaryT = contextfreeT $ \ ty -> do
     binder <- newIdH ("$d" ++ filter (not . isSpace) (showPpr dflags ty)) ty
     guts <- getModGuts
     (i,bnds) <- liftCoreM $ buildDictionary guts binder
-    if (null bnds) then
+    if null bnds then
       fail "couldn't build dictionary"
      else
        return $ case bnds of
