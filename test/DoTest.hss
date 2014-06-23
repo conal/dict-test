@@ -11,4 +11,8 @@ rhs-of test2
 try succ
 top
 
+rhs-of test3
+try succ
+top
+
 down

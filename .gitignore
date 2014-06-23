@@ -8,6 +8,8 @@ tags
 tarballs
 out/
 
+test/Test
+
 # Mac OS generates
 .DS_Store
 
