@@ -76,3 +76,24 @@ Test.foo = GHC.Enum.succ @ () GHC.Enum.$fEnum() GHC.Tuple.()
 
 *** End of Offense ***
 ```
+
+
+For now, I'm working around the problem with a tweak to `buildDictionaryT` that checks for empty bindings (`null bnds`):
+
+```haskell
+buildDictionaryT :: Transform c HermitM Type CoreExpr
+buildDictionaryT = contextfreeT $ \ ty -> do
+    dflags <- getDynFlags
+    binder <- newIdH ("$d" ++ filter (not . isSpace) (showPpr dflags ty)) ty
+    guts <- getModGuts
+    (i,bnds) <- liftCoreM $ buildDictionary guts binder
+    if (null bnds)
+      fail "couldn't build dictionary"
+     else return $ case bnds of
+                     [NonRec v e] | i == v -> e -- the common case that we would have gotten a single non-recursive let
+                     _ -> mkCoreLets bnds (varToCoreExpr i)
+```
+
+ </blockquote>
+
+Now I use this definition if the CPP symbol `MyBuildDict` is defined.
