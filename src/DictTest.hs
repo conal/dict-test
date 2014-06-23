@@ -10,7 +10,7 @@
 -- Test HERMIT-based dictionary construction
 ----------------------------------------------------------------------
 
--- #define MyBuildDict
+#define MyBuildDict
 
 module DictTest where
 
@@ -28,7 +28,6 @@ import HERMIT.Plugin (hermitPlugin,phase,interactive)
 
 #ifdef MyBuildDict
 -- For experimental buildDictionaryT tweaks
-import Control.Monad (when)
 import Data.Char (isSpace)
 import HERMIT.Monad (HermitM,liftCoreM,getModGuts,newIdH)
 #endif
@@ -55,8 +54,10 @@ buildDictionaryT = contextfreeT $ \ ty -> do
     binder <- newIdH ("$d" ++ filter (not . isSpace) (showPpr dflags ty)) ty
     guts <- getModGuts
     (i,bnds) <- liftCoreM $ buildDictionary guts binder
-    when (null bnds) $ fail "couldn't build dictionary"
-    return $ case bnds of
-                [NonRec v e] | i == v -> e -- the common case that we would have gotten a single non-recursive let
-                _ -> mkCoreLets bnds (varToCoreExpr i)
+    if (null bnds) then
+      fail "couldn't build dictionary"
+     else
+       return $ case bnds of
+                  [NonRec v e] | i == v -> e -- the common case that we would have gotten a single non-recursive let
+                  _ -> mkCoreLets bnds (varToCoreExpr i)
 #endif
