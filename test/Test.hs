@@ -8,10 +8,10 @@
 
 module Test where
 
--- Odd: Without a mention of succ somewhere in this module, buildDictionary
--- fails silently, producing no bindings.
+-- Odd: Without a mention of succ or pred (i.e., Enum) somewhere in this module,
+-- buildDictionary fails silently, producing no bindings.
 foo :: ()
-foo = succ ()
+foo = pred ()
 
 test1 :: Bool
 test1 = False
