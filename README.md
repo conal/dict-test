@@ -15,9 +15,7 @@ test3 = (unpackCString# "oops!"#)        -- failure
 Instead, all three `succ` applications succeed, and but `test3` refers to a bogus dictionary variable:
 ```
 test3 :: [Char]
-test3 =
-  succ [Char] $dGHC.Enum.Enum[GHC.Types.Char]
-    (unpackCString# "oops!"#)
+test3 = succ [Char] $dGHC.Enum.Enum[GHC.Types.Char] (unpackCString# "oops!"#)
 ```
 
 Moreover, *all three* definitions succeed with this bogus form when the name `succ` does not appear in the pre-transformed module.
