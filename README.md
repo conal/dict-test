@@ -35,6 +35,9 @@ bash-3.2$ cabal install
 ...
 Installed dict-test-0.0
 bash-3.2$ cd test
+bash-3.2$ hermit Test.hs -v0 -opt=DictTest DoTest.hss
+[starting HERMIT v0.5.0.0 on Test.hs]
+% ghc Test.hs -fforce-recomp -O2 -dcore-lint -fsimple-list-literals -fexpose-all-unfoldings -fplugin=DictTest -fplugin-opt=DictTest:-v0 -fplugin-opt=DictTest:DoTest.hss -fplugin-opt=DictTest:*: -v0
 test3 :: [Char]
 test3 =
   succ [Char] $dGHC.Enum.Enum[GHC.Types.Char]
